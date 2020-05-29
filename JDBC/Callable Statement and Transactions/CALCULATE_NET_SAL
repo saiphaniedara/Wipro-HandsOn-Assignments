@@ -1,0 +1,29 @@
+create or replace PROCEDURE CALCULATE_NET_SAL 
+(
+  EMP_ID IN NUMBER 
+, NET_SAL OUT NUMBER 
+) 
+IS
+    sal NUMBER;
+    comm NUMBER;
+    it NUMBER;
+    gross_sal NUMBER;
+BEGIN
+    select salary into sal from employees where employee_id=emp_id;
+    select commission_pct into comm from employees where employee_id=emp_id;
+    if comm is not null then
+        comm:=(sal*comm)/10;
+        gross_sal:=sal+comm;
+    end if;
+    if comm is null then
+        gross_sal:=sal;
+        it:=gross_sal*(10/100);
+    else 
+        if comm<500 then
+            it:=gross_sal*(15/100);
+        else
+            it:=gross_sal*(20/100);
+        end if;
+    end if;
+    net_sal:=gross_sal-it;
+END CALCULATE_NET_SAL;

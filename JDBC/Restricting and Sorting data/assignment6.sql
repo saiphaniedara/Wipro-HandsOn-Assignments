@@ -1,0 +1,1 @@
+select first_name ||' '|| last_name "Employee",salary "Monthly Salary" from employees where (salary>5000 and salary<12000) and department_id in (20,50);
